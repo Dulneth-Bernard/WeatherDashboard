@@ -120,8 +120,8 @@ struct ForecastView: View {
     }
 }
 
-#Preview {
-    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
-    ForecastView()
-        .environmentObject(vm)
-}
+//#Preview {
+//    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
+//    ForecastView()
+//        .environmentObject(vm)
+//}

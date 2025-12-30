@@ -25,8 +25,8 @@ struct CurrentWeatherView: View {
     }
 }
 
-#Preview {
-    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
-    CurrentWeatherView()
-        .environmentObject(vm)
-}
+//#Preview {
+//    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
+//    CurrentWeatherView()
+//        .environmentObject(vm)
+//}

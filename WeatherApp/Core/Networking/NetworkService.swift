@@ -8,5 +8,5 @@
 import Foundation
 
 protocol NetworkService : Sendable{
-   //TODO: implement the netowrk protocolas after fetch function
+    func fetch<T:Decodable>(urlString: String) async throws -> T
 }

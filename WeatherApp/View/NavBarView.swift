@@ -11,17 +11,18 @@ import SwiftData
 struct NavBarView: View {
     @EnvironmentObject var vm: MainAppViewModel
 
+
     var body: some View {
         VStack(spacing: 0) {
             // 🔍 Search Bar
             HStack {
-                TextField("Enter location", text: $vm.query)
-                    .textFieldStyle(.roundedBorder)
-                    .submitLabel(.search)
-                    .onSubmit { vm.submitQuery() } 
+//                TextField("Enter location", text: $vm.query)
+//                    .textFieldStyle(.roundedBorder)
+//                    .submitLabel(.search)
+//                    .onSubmit { vm.submitQuery() } 
 
                 Button {
-                    vm.submitQuery()
+//                    vm.submitQuery()
                 } label: {
                     Image(systemName: "magnifyingglass")
                         .font(.title2)
@@ -33,10 +34,11 @@ struct NavBarView: View {
             .padding(.horizontal)
 
             // 🌤 Tabs
-            TabView(selection: $vm.selectedTab) {
+            TabView(selection: .constant(0)){
                 CurrentWeatherView()
                     .tabItem { Label("Now", systemImage: "sun.max.fill") }
                     .tag(0)
+            
 
                 ForecastView()
                     .tabItem { Label("Forecast", systemImage: "calendar") }
@@ -54,30 +56,30 @@ struct NavBarView: View {
         }
         .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .top)
 
-        .overlay {
-            if vm.isLoading {
-                ProgressView("Loading…")
-                    .padding()
-                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
-            }
-        }
-        .alert(item: $vm.appError) { error in
-            Alert(
-                title: Text("Error"),
-                message: Text(error.localizedDescription),
-                dismissButton: .default(Text("OK"))
-            )
-        }
+//        .overlay {
+//            if vm.isLoading {
+//                ProgressView("Loading…")
+//                    .padding()
+//                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
+//            }
+//        }
+//        .alert(item: $vm.appError) { error in
+//            Alert(
+//                title: Text("Error"),
+//                message: Text(error.localizedDescription),
+//                dismissButton: .default(Text("OK"))
+//            )
+//        }
     }
 }
 
 
 
-#Preview {
-    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
-    NavBarView()
-        .environmentObject(vm)
-}
+//#Preview {
+//    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
+//    NavBarView()
+//        .environmentObject(vm)
+//}
 
 //#Preview("Full Dashboard") {
 //    // 👇 This creates a mock ModelContext using your in-memory preview container

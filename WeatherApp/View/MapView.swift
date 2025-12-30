@@ -26,8 +26,8 @@ struct MapView: View {
 
     }
 }
-#Preview {
-    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
-    MapView()
-        .environmentObject(vm)
-}
+//#Preview {
+//    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
+//    MapView()
+//        .environmentObject(vm)
+//}

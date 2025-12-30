@@ -28,8 +28,8 @@ struct VisitedPlacesView: View {
     }
 }
 
-#Preview {
-    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
-    VisitedPlacesView()
-        .environmentObject(vm)
-}
+//#Preview {
+//    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
+//    VisitedPlacesView()
+//        .environmentObject(vm)
+//}

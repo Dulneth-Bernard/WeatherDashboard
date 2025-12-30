@@ -3,7 +3,6 @@
 
 import Foundation
 
-
 struct DefaultNetwork: NetworkService{
     private let decoder : JSONDecoder
     private let session : URLSession
@@ -13,7 +12,7 @@ struct DefaultNetwork: NetworkService{
         self.session = session
     }
     
-    func fetch<T:Decodable>(urlString: String, type: T.Type) async throws -> T{
+    func fetch<T:Decodable>(urlString: String) async throws -> T{
         
         guard let url =  URL(string:urlString ) else{
             throw WeatherMapError.invalidURL(urlString)
@@ -42,8 +41,5 @@ struct DefaultNetwork: NetworkService{
         }
         
     }
-    
-    
-    
 }
 

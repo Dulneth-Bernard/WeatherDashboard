@@ -1,13 +1,7 @@
-//
-//  MainAppViewModel.swift
-//  WeatherDashboardTemplate
-//
-//  Created by girish lukka on 18/10/2025.
-//
-
 import SwiftUI
 import SwiftData
 import MapKit
+import Combine
 
 @MainActor
 final class MainAppViewModel: ObservableObject {
@@ -22,42 +16,53 @@ final class MainAppViewModel: ObservableObject {
     @Published var activePlaceName: String = ""
     private let defaultPlaceName = "London"
     @Published var selectedTab: Int = 0
-
+    private let networkService: NetworkService
+    var appStatus: AppStatus = .idle
+    
     /// Create and use a WeatherService model (class) to manage fetching and decoding weather data
-    private let weatherService = WeatherService()
-
+    private lazy var weatherService = WeatherService(networkService: networkService)
+    
     /// Create and use a LocationManager model (class) to manage address conversion and tourist places
     private let locationManager = LocationManager()
-
+    
     /// Use a context to manage database operations
     private let context: ModelContext
-
-    init(context: ModelContext) {
-        // Initialize the ModelContext and attempt to fetch previously visited places from SwiftData, sorted by most recent use.
-        // If no visited places exist (first launch), load the default location.
-        // Otherwise, load the most recently used place.
-        self.context = context
-
-        // Corrected FetchDescriptor to include sorting by 'lastUsedAt' in reverse order.
-        if let results = try? context.fetch(
-            FetchDescriptor<Place>(sortBy: [SortDescriptor(\Place.lastUsedAt, order: .reverse)])
-        ) {
-            self.visited = results
+    
+    init(
+        networkService: NetworkService,
+        context: ModelContext) {
+            self.networkService = networkService
+            self.context = context
+            self.mapRegion = mapRegion
         }
 
-        // First launch: no data → perform full London setup
-        if visited.isEmpty {
-            Task {
-                await loadDefaultLocation()
-            }
-        } else if let mostRecent = visited.first {
-            // Otherwise, load most recently used place
-            Task {
-                await loadLocation(fromPlace: mostRecent)
-            }
-        }
-    }
-
+    
+    //    init(context: ModelContext) {
+    //        // Initialize the ModelContext and attempt to fetch previously visited places from SwiftData, sorted by most recent use.
+    //        // If no visited places exist (first launch), load the default location.
+    //        // Otherwise, load the most recently used place.
+    //        self.context = context
+    //
+    //        // Corrected FetchDescriptor to include sorting by 'lastUsedAt' in reverse order.
+    //        if let results = try? context.fetch(
+    //            FetchDescriptor<Place>(sortBy: [SortDescriptor(\Place.lastUsedAt, order: .reverse)])
+    //        ) {
+    //            self.visited = results
+    //        }
+    //
+    //        // First launch: no data → perform full London setup
+    //        if visited.isEmpty {
+    //            Task {
+    //                await loadDefaultLocation()
+    //            }
+    //        } else if let mostRecent = visited.first {
+    //            // Otherwise, load most recently used place
+    //            Task {
+    //                await loadLocation(fromPlace: mostRecent)
+    //            }
+    //        }
+    //    }
+    
     func submitQuery() {
         let city = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !city.isEmpty else {
@@ -77,12 +82,21 @@ final class MainAppViewModel: ObservableObject {
     func loadDefaultLocation() async {
         // Attempts to select and load the hardcoded default location name.
         // If an error occurs during selection, sets an app error.
+        appStatus = .loading
+        do{
+            let defaultWeatherResponse = try await weatherService.fetchWeather(lat: 51.5072, lon: 0.1276)
+            forecast = defaultWeatherResponse.current.weather
+            appStatus = .success
+        }catch{
+            appStatus = .failure
+            appError = .networkError(error)
+        }
     }
-
+    
     func search() async throws {
         // If the query is not empty, calls `select(placeNamed:)` with the current query string.
     }
-
+    
     /// Validate weather before saving a new place; create POI children once.
     func loadLocation(byName: String) async throws {
         // Sets loading state, then attempts to load data for the given place name.
@@ -94,21 +108,21 @@ final class MainAppViewModel: ObservableObject {
         // 6. Updates UI by setting `pois`, `activePlaceName`, and focusing the map.
         // 7. If any step fails, logs the error and reverts to the default location with an alert.
     }
-
+    
     func loadLocation(fromPlace place: Place) async{
         // Sets loading state, then attempts to load all data for an existing `Place` object.
         // Updates the place's `lastUsedAt` and saves the context upon success.
         // Catches and sets `appError` for any failure during the load process.
     }
-
+    
     private func revertToDefaultWithAlert(message: String) async {
         // Sets an `appError` with the given message, then calls `loadDefaultLocation()` to switch back to the default.
     }
-
+    
     func focus(on coordinate: CLLocationCoordinate2D, zoom: Double = 0.02) {
         // Animates the map region to center on the given coordinate with a specified zoom level (span).
     }
-
+    
     private func loadAll(for place: Place) async throws {
         // Sets `activePlaceName` and prints a loading message.
         // Always refreshes weather data from the API.
@@ -118,10 +132,10 @@ final class MainAppViewModel: ObservableObject {
         // Calls `focus(on:zoom:)` to update the map view.
         // Ensures the place is at the top of the `visited` list (if not already).
     }
-
+    
     func delete(place: Place) {
         // Deletes the given `Place` object from the ModelContext and removes it from the `visited` array.
         // Attempts to save the context.
     }
-
+    
 }
