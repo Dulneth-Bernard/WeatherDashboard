@@ -19,6 +19,10 @@ final class MainAppViewModel: ObservableObject {
     private let networkService: NetworkService
     var appStatus: AppStatus = .idle
     
+//    nees to be edited
+    //@Published var currentConditions: Current?
+    //@Published var timezoneOffset: Int = 0 // Needed for accurate local time calculations
+    
     /// Create and use a WeatherService model (class) to manage fetching and decoding weather data
     private lazy var weatherService = WeatherService(networkService: networkService)
     
