@@ -1,3 +1,5 @@
+
+
 //
 //  Place.swift
 //  WeatherDashboardTemplate
@@ -15,19 +17,24 @@ final class Place {
     var name: String
     var latitude: Double
     var longitude: Double
-    var lastUsedAt: Date 
+    var lastUsedAt: Date
+    
+    @Relationship(deleteRule: .cascade)
+    var annotations: [AnnotationModel]
 
     init(
         id: UUID = UUID(),
         name: String,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        annotations: [AnnotationModel] = []
     ) {
         self.id = id
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
         self.lastUsedAt = .now
+        self.annotations = annotations
     }
 }
 
@@ -37,6 +44,10 @@ final class AnnotationModel: Identifiable {
     var name: String
     var latitude: Double
     var longitude: Double
+    
+    /// Inverse relationship back to Place
+        var place: Place?
+
 
 
     init(name: String, latitude: Double, longitude: Double) {
@@ -47,3 +58,4 @@ final class AnnotationModel: Identifiable {
     }
 
 }
+
