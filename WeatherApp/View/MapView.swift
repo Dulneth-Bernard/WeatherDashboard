@@ -8,24 +8,58 @@
 import SwiftUI
 import SwiftData
 
+import MapKit
+
 struct MapView: View {
+
     @EnvironmentObject var vm: MainAppViewModel
+    @State private var cameraPosition: MapCameraPosition = .automatic
 
-    // MARK:  add other necessary variables
     var body: some View {
-        VStack{
-            Text("Image shows the information to be presented in this view")
-            Spacer()
-            Image("map")
-                .resizable()
+        ZStack {
+            Map(position: $cameraPosition) {
+                ForEach(vm.pois) { poi in
+                    Marker(
+                        poi.name,
+                        coordinate: CLLocationCoordinate2D(
+                            latitude: poi.latitude,
+                            longitude: poi.longitude
+                        )
+                    )
+                }
+            }
+            // 👇 Observe Equatable values instead of MapKit types
+            .onChange(of: vm.mapRegion.center.latitude) { _, _ in
+                updateCamera()
+            }
+            .onChange(of: vm.mapRegion.center.longitude) { _, _ in
+                updateCamera()
+            }
+            .edgesIgnoringSafeArea(.all)
 
-
-            Spacer()
+            VStack {
+                if !vm.activePlaceName.isEmpty {
+                    Text(vm.activePlaceName)
+                        .font(.headline)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(.ultraThinMaterial, in: Capsule())
+                        .padding(.top, 12)
+                }
+                Spacer()
+            }
         }
-        .frame(height: 600)
+        .navigationTitle("Map")
+        .onAppear {
+            updateCamera()
+        }
+    }
 
+    private func updateCamera() {
+        cameraPosition = .region(vm.mapRegion)
     }
 }
+
 //#Preview {
 //    let vm = MainAppViewModel(context: ModelContext(ModelContainer.preview))
 //    MapView()
