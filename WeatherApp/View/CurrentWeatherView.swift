@@ -161,11 +161,13 @@ struct CurrentWeatherView: View {
                         HStack{
                             Text("\(Int(current.temp))°")
                                 .font(.system(size: 108, weight: .medium))
+                                //Avoid getting ttruncation
+                                .minimumScaleFactor(0.5)
                             Spacer()
                             
                             Image(systemName: adviceCategory.icon)
                                 .font(.system(size: 68))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(adviceCategory.color)
                             
                         }.padding(.horizontal, 48)
                         
@@ -229,18 +231,66 @@ struct CurrentWeatherView: View {
 // MARK: - Subviews
 
 private extension CurrentWeatherView {
+    // Background Gradient (Custom RGB for premium feel)
+        var backgroundGradient: LinearGradient {
+            let colors: [Color]
+            
+            switch adviceCategory {
+            case .freezing:
+                // Icy White to Soft Lavender
+                colors = [
+                    Color(red: 0.90, green: 0.95, blue: 1.00),
+                    Color(red: 0.75, green: 0.80, blue: 0.95)
+                ]
+            case .cold:
+                // Soft Sky Blue to Cool Grey-Blue
+                colors = [
+                    Color(red: 0.80, green: 0.90, blue: 0.95),
+                    Color(red: 0.60, green: 0.75, blue: 0.90)
+                ]
+            case .mild:
+                // Mint Green to Fresh Teal
+                colors = [
+                    Color(red: 0.85, green: 0.98, blue: 0.90),
+                    Color(red: 0.65, green: 0.90, blue: 0.85)
+                ]
+            case .warm:
+                // Soft Sunshine Yellow to Warm Peach
+                colors = [
+                    Color(red: 1.00, green: 0.95, blue: 0.80),
+                    Color(red: 1.00, green: 0.85, blue: 0.70)
+                ]
+            case .hot:
+                // Warm Coral to Soft Orange
+                colors = [
+                    Color(red: 1.00, green: 0.80, blue: 0.75),
+                    Color(red: 1.00, green: 0.65, blue: 0.60)
+                ]
+            case .unknown:
+                // Your original beautiful pastel
+                colors = [
+                    Color(red: 0.74, green: 0.82, blue: 0.95),
+                    Color(red: 0.98, green: 0.85, blue: 0.80)
+                ]
+            }
 
+            return LinearGradient(
+                colors: colors,
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
     // Background Gradient (Apple-style ambient gradient)
-    var backgroundGradient: LinearGradient {
-        LinearGradient(
-            colors: [
-                Color(red: 0.74, green: 0.82, blue: 0.95),
-                Color(red: 0.98, green: 0.85, blue: 0.80)
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-    }
+//    var backgroundGradient: LinearGradient {
+//        LinearGradient(
+//            colors: [
+//                Color(red: 0.74, green: 0.82, blue: 0.95),
+//                Color(red: 0.98, green: 0.85, blue: 0.80)
+//            ],
+//            startPoint: .top,
+//            endPoint: .bottom
+//        )
+//    }
 
     // Weather Details Card
     var detailsCard: some View {

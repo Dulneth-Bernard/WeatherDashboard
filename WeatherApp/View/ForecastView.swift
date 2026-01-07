@@ -127,114 +127,114 @@ import Charts   // Include if you plan to show a chart later
 
 
 // MARK: - Temperature Category
-enum TempCategory: String, CaseIterable {
-    case freezing
-    case cold
-    case mild
-    case warm
-    case hot
-
-    var color: Color {
-        switch self {
-        case .freezing: return .blue
-        case .cold:     return .cyan
-        case .mild:     return .green
-        case .warm:     return .orange
-        case .hot:      return .red
-        }
-    }
-
-    static func from(tempC: Double) -> TempCategory {
-        switch tempC {
-        case ..<0: return .freezing
-        case 0..<10: return .cold
-        case 10..<20: return .mild
-        case 20..<28: return .warm
-        default: return .hot
-        }
-    }
-}
-
-// MARK: - Temperature Data Model
-private struct TempData: Identifiable {
-    let id = UUID()
-    let date: Date
-    let minTemp: Double
-    let maxTemp: Double
-    let category: TempCategory
-}
-
-// MARK: - Forecast View
-struct ForecastView: View {
-
-    @EnvironmentObject var vm: MainAppViewModel
-
-    /// Converts real forecast data into chart-friendly entries
-    private var chartData: [TempData] {
-        guard let daily = vm.weatherResponse?.daily else { return [] }
-
-        return daily.prefix(8).map { day in
-            TempData(
-                date: Date(timeIntervalSince1970: TimeInterval(day.dt)),
-                minTemp: day.temp.min,
-                maxTemp: day.temp.max,
-                category: TempCategory.from(tempC: day.temp.max)
-            )
-        }
-    }
-
-    var body: some View {
-        VStack(spacing: 16) {
-
-            // Header
-            Text("8-Day Weather Forecast")
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .padding(.top)
-
-            // MARK: - Chart
-            Chart(chartData) { item in
-                BarMark(
-                    x: .value("Day", item.date, unit: .day),
-                    y: .value("Max Temp", item.maxTemp)
-                )
-                .foregroundStyle(item.category.color)
-
-                BarMark(
-                    x: .value("Day", item.date, unit: .day),
-                    y: .value("Min Temp", item.minTemp)
-                )
-                .foregroundStyle(item.category.color.opacity(0.5))
-            }
-            .frame(height: 220)
-            .padding(.horizontal)
-
-            // MARK: - Forecast List
-            List(chartData) { item in
-                HStack {
-                    Text(
-                        DateFormatterUtils.formattedDateWithWeekdayAndDay(
-                            from: item.date.timeIntervalSince1970
-                        )
-                    )
-
-                    Spacer()
-
-                    Text("\(Int(item.minTemp))° / \(Int(item.maxTemp))°")
-                        .fontWeight(.medium)
-                }
-            }
-        }
-        .background(
-            LinearGradient(
-                colors: [.indigo.opacity(0.1), .blue.opacity(0.05)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .navigationTitle("Forecast")
-    }
-}
+//enum TempCategory: String, CaseIterable {
+//    case freezing
+//    case cold
+//    case mild
+//    case warm
+//    case hot
+//
+//    var color: Color {
+//        switch self {
+//        case .freezing: return .blue
+//        case .cold:     return .cyan
+//        case .mild:     return .green
+//        case .warm:     return .orange
+//        case .hot:      return .red
+//        }
+//    }
+//
+//    static func from(tempC: Double) -> TempCategory {
+//        switch tempC {
+//        case ..<0: return .freezing
+//        case 0..<10: return .cold
+//        case 10..<20: return .mild
+//        case 20..<28: return .warm
+//        default: return .hot
+//        }
+//    }
+//}
+//
+//// MARK: - Temperature Data Model
+//private struct TempData: Identifiable {
+//    let id = UUID()
+//    let date: Date
+//    let minTemp: Double
+//    let maxTemp: Double
+//    let category: TempCategory
+//}
+//
+//// MARK: - Forecast View
+//struct ForecastView: View {
+//
+//    @EnvironmentObject var vm: MainAppViewModel
+//
+//    /// Converts real forecast data into chart-friendly entries
+//    private var chartData: [TempData] {
+//        guard let daily = vm.weatherResponse?.daily else { return [] }
+//
+//        return daily.prefix(8).map { day in
+//            TempData(
+//                date: Date(timeIntervalSince1970: TimeInterval(day.dt)),
+//                minTemp: day.temp.min,
+//                maxTemp: day.temp.max,
+//                category: TempCategory.from(tempC: day.temp.max)
+//            )
+//        }
+//    }
+//
+//    var body: some View {
+//        VStack(spacing: 16) {
+//
+//            // Header
+//            Text("8-Day Weather Forecast")
+//                .font(.headline)
+//                .multilineTextAlignment(.center)
+//                .padding(.top)
+//
+//            // MARK: - Chart
+//            Chart(chartData) { item in
+//                BarMark(
+//                    x: .value("Day", item.date, unit: .day),
+//                    y: .value("Max Temp", item.maxTemp)
+//                )
+//                .foregroundStyle(item.category.color)
+//
+//                BarMark(
+//                    x: .value("Day", item.date, unit: .day),
+//                    y: .value("Min Temp", item.minTemp)
+//                )
+//                .foregroundStyle(item.category.color.opacity(0.5))
+//            }
+//            .frame(height: 220)
+//            .padding(.horizontal)
+//
+//            // MARK: - Forecast List
+//            List(chartData) { item in
+//                HStack {
+//                    Text(
+//                        DateFormatterUtils.formattedDateWithWeekdayAndDay(
+//                            from: item.date.timeIntervalSince1970
+//                        )
+//                    )
+//
+//                    Spacer()
+//
+//                    Text("\(Int(item.minTemp))° / \(Int(item.maxTemp))°")
+//                        .fontWeight(.medium)
+//                }
+//            }
+//        }
+//        .background(
+//            LinearGradient(
+//                colors: [.indigo.opacity(0.1), .blue.opacity(0.05)],
+//                startPoint: .topLeading,
+//                endPoint: .bottomTrailing
+//            )
+//        )
+//        .navigationTitle("Forecast")
+//    }
+//}
 
 // MARK: - Preview
 //#Preview {
@@ -242,3 +242,84 @@ struct ForecastView: View {
 //    ForecastView()
 //        .environmentObject(vm)
 //}
+
+
+import SwiftUI
+import Charts
+import SwiftData
+
+struct ForecastView: View {
+    @EnvironmentObject var vm: MainAppViewModel
+
+    // Reusable Gradient
+    var backgroundGradient: LinearGradient {
+        LinearGradient(
+            colors: [Color(red: 0.74, green: 0.82, blue: 0.95), Color(red: 0.98, green: 0.85, blue: 0.80)],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+
+    var body: some View {
+        ZStack {
+            // 1. Global Gradient Background
+            backgroundGradient.ignoresSafeArea()
+
+            VStack(spacing: 16) {
+                Text("8-Day Forecast")
+                    .font(.headline)
+                    .padding(.top)
+
+                // Chart Container
+                if let daily = vm.weatherResponse?.daily {
+                    Chart {
+                        ForEach(daily.prefix(8), id: \.dt) { day in
+                            let date = Date(timeIntervalSince1970: TimeInterval(day.dt))
+                            BarMark(
+                                x: .value("Day", date, unit: .day),
+                                yStart: .value("Min", day.temp.min),
+                                yEnd: .value("Max", day.temp.max)
+                            )
+                            .foregroundStyle(gradientFor(temp: day.temp.max))
+                            .cornerRadius(4)
+                        }
+                    }
+                    .chartYAxis { AxisMarks(position: .leading) }
+                    .frame(height: 220)
+                    .padding()
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                    .padding(.horizontal)
+                }
+
+                // Scrollable List
+                List {
+                    if let daily = vm.weatherResponse?.daily {
+                        ForEach(daily.prefix(8), id: \.dt) { day in
+                            HStack {
+                                Text(DateFormatterUtils.formattedDateWithWeekdayAndDay(from: TimeInterval(day.dt)))
+                                    .fontWeight(.medium)
+                                Spacer()
+                                if let icon = day.weather.first?.icon {
+                                    AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(icon).png"))
+                                        .frame(width: 30, height: 30)
+                                }
+                                Text("\(Int(day.temp.min))° - \(Int(day.temp.max))°")
+                                    .foregroundStyle(.secondary)
+                            }
+                            .listRowBackground(Color.clear) // IMPORTANT: Transparent row
+                            .listRowSeparator(.visible)
+                        }
+                    }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden) // IMPORTANT: Transparent List
+            }
+        }
+        .navigationTitle("Forecast")
+    }
+
+    func gradientFor(temp: Double) -> LinearGradient {
+        let color: Color = temp < 10 ? .blue : (temp > 25 ? .orange : .green)
+        return LinearGradient(colors: [color.opacity(0.8), color.opacity(0.3)], startPoint: .bottom, endPoint: .top)
+    }
+}

@@ -23,12 +23,15 @@ struct AdvisoryCard: View {
             Text(advice)
                 .font(.callout)
                 .multilineTextAlignment(.leading)
+            
+            Spacer()
         }
         .padding()
         .background(
             .ultraThinMaterial,
             in: RoundedRectangle(cornerRadius: 14)
         )
+     
     }
 }
 
