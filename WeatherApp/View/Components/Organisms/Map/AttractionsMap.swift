@@ -1,9 +1,17 @@
+//
+//  AttractionsMap.swift
+//  WeatherApp
+//
+//  Created by Dulneth Bernard on 05/01/2026.
+//
+
+
 import SwiftUI
 import MapKit
 
 struct AttractionsMap: View {
     @Binding var position: MapCameraPosition
-    let pois: [AnnotationModel] // ✅ Correct type
+    let pois: [AnnotationModel]
     
     var body: some View {
         Map(position: $position) {

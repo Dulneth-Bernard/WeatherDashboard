@@ -51,5 +51,40 @@ enum WeatherAdviceCategory: String {
         case .unknown: return .gray
         }
     }
+    
+    func getWeatherBackGroundGradient(adviceCategory: WeatherAdviceCategory) -> LinearGradient {
+        let colors: [Color]
+        
+        switch adviceCategory {
+        case .freezing:
+            colors = [Color("FreezingStart"), Color("FreezingEnd")]
+            
+        case .cold:
+            colors = [Color("ColdStart"), Color("ColdEnd")]
+            
+        case .mild:
+            colors = [Color("MildStart"), Color("MildEnd")]
+            
+        case .warm:
+            colors = [Color("WarmStart"), Color("WarmEnd")]
+            
+        case .hot:
+            colors = [Color("HotStart"), Color("HotEnd")]
+            
+        case .unknown:
+            colors = [Color("UnknownStart"), Color("UnknownEnd")]
+        }
+        
+        return LinearGradient(
+            colors: colors,
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+    
+    var backgroundGradient: LinearGradient {
+    
+        return self.getWeatherBackGroundGradient(adviceCategory: self)
+    }
 }
 

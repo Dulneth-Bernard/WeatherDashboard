@@ -2,7 +2,7 @@
 //  VisitedPlacesList.swift
 //  WeatherApp
 //
-//  Created by Dulneth Bernard on 08/01/2026.
+//  Created by Dulneth Bernard on 05/01/2026.
 //
 
 
@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct VisitedPlacesList: View {
-    // 1. Change [VisitedPlace] to [Place] to match your Model
+
     let places: [Place]
     let onSelect: (Place) -> Void
     let onDelete: (IndexSet) -> Void
@@ -21,7 +21,7 @@ struct VisitedPlacesList: View {
                 Button {
                     onSelect(place)
                 } label: {
-                    // 2. Pass data to the Row Molecule
+             
                     VisitedPlaceRow(
                         placeName: place.name,
                         lastVisited: place.lastUsedAt
@@ -36,7 +36,7 @@ struct VisitedPlacesList: View {
 }
 
 #Preview {
-    // Mock data for preview
+
     let mockPlaces = [
         Place(name: "Paris", latitude: 48.85, longitude: 2.35),
         Place(name: "London", latitude: 51.50, longitude: -0.12)

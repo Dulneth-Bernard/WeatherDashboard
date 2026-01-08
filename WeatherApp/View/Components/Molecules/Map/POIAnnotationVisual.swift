@@ -1,3 +1,11 @@
+//
+//  POIAnnotationVisual.swift
+//  WeatherApp
+//
+//  Created by Dulneth Bernard on 03/01/2026.
+//
+
+
 import SwiftUI
 
 struct POIAnnotationVisual: View {

@@ -10,45 +10,6 @@ import CoreLocation
 @preconcurrency import MapKit
 
 
-//@MainActor
-//final class LocationManager {
-//    
-//    private let geocoder = CLGeocoder()
-//
-//    func geocodeAddress(_ address: String) async throws -> (name: String, lat: Double, lon: Double) {
-//        // Uses `CLGeocoder` to convert a string address into geographic coordinates.
-//        // Extracts the name, latitude, and longitude from the first resulting placemark.
-//        // Throws a `WeatherMapError.geocodingFailed` if no valid location can be found.
-//        
-//        guard !address.isEmpty else { throw WeatherMapError.geocodingFailed("Address is empty") }
-//        
-//        let placemarks = try await geocoder.geocodeAddressString(address)
-//        
-//        guard let place = placemarks.first,
-//              let location = place.location,
-//              let name = place.locality ?? place.name else {
-//            throw WeatherMapError.geocodingFailed(address)
-//            
-//            return (name, location.coordinate.latitude, location.coordinate.longitude)
-//        }
-//        
-//
-//        // DUMMY RETURN TO SATISFY COMPILER
-//        preconditionFailure("Stubbed function not implemented. Requires a (name: String, lat: Double, lon: Double) return.")
-//    }
-//
-//    func findPOIs(lat: Double, lon: Double, limit: Int = 5) async throws -> [AnnotationModel] {
-//        // Uses `MKLocalSearch` to find Points of Interest (POIs), specifically "Tourist Attractions," within a small region around the given latitude and longitude.
-//        // Executes the search request.
-//        // Maps the `MKMapItem` results into an array of `AnnotationModel`s, filtering out any without a name.
-//        // Limits the final array size to the specified `limit`.
-//
-//        // DUMMY RETURN TO SATISFY COMPILER
-//        preconditionFailure("Stubbed function not implemented. Requires a [AnnotationModel] return.")
-//    }
-//}
-
-
 @MainActor
 final class LocationManager {
 

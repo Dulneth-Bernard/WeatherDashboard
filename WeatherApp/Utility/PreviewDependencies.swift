@@ -1,11 +1,10 @@
 import Foundation
 import SwiftData
 
-// MARK: - Mock Network for Previews
+// Mock Network for Previews
 struct MockNetworkService: NetworkService {
     func fetch<T>(urlString: String) async throws -> T where T : Decodable {
-        // Provide minimal, deterministic fake data for types we know about.
-        // If an unknown type is requested, crash loudly in previews to catch misuse.
+   
         if T.self == WeatherResponse.self {
             let now = Int(Date().timeIntervalSince1970)
 
@@ -53,10 +52,8 @@ struct MockNetworkService: NetworkService {
     }
 }
 
-// MARK: - Preview ViewModel Factory
 enum PreviewDependencies {
     static func makePreviewViewModel() -> MainAppViewModel {
-        // Build an in-memory SwiftData container for previews
         let schema = Schema([Place.self, AnnotationModel.self])
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try! ModelContainer(for: schema, configurations: [config])

@@ -10,9 +10,33 @@
 		8C6AB07F2EEEDD6300A213D0 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8C6105B42F00D8C7005A477E /* Exceptions for "WeatherApp" folder in "WeatherApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Utility/PreviewHelper.swift,
+			);
+			target = 8C6AB07E2EEEDD6300A213D0 /* WeatherApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		8C6105B52F00D8C7005A477E /* Exceptions for "WeatherApp" folder in "Copy Bundle Resources" phase from "WeatherApp" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 8C6AB07D2EEEDD6300A213D0 /* Resources */;
+			membershipExceptions = (
+				Utility/PreviewHelper.swift,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8C6AB0812EEEDD6300A213D0 /* WeatherApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8C6105B42F00D8C7005A477E /* Exceptions for "WeatherApp" folder in "WeatherApp" target */,
+				8C6105B52F00D8C7005A477E /* Exceptions for "WeatherApp" folder in "Copy Bundle Resources" phase from "WeatherApp" target */,
+			);
 			path = WeatherApp;
 			sourceTree = "<group>";
 		};

@@ -1,6 +1,5 @@
 
 
-
 import Foundation
 
 struct DefaultNetwork: NetworkService{
@@ -20,10 +19,14 @@ struct DefaultNetwork: NetworkService{
         
         do{
             let (data,response) = try await session.data(from: url)
+
             
-            guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else{
-                throw WeatherMapError.invalidResponse(statusCode: 200)
-                
+            guard let http = response as? HTTPURLResponse else {
+                throw WeatherMapError.invalidResponse(statusCode: 0)
+            }
+            
+            guard (200..<300).contains(http.statusCode) else {
+                throw WeatherMapError.invalidResponse(statusCode: http.statusCode)
             }
             
             let responseData = try decoder.decode(T.self, from: data)

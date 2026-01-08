@@ -9,20 +9,12 @@ import SwiftUI
 import SwiftData
 
 
-//struct WeatherAppApp: App {
-//    var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//        }
-//    }
-//}
-
 @main
-
 struct WeatherAppApp: App {
 
     // code to set configure ViewModel and ModelContainer
     @StateObject private var vm: MainAppViewModel
+    @AppStorage("darkMode") private var isDarkMode: Bool = false
     private let container: ModelContainer
     init() {
 
@@ -43,10 +35,11 @@ struct WeatherAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavBarView()
+            NavBarView(isDarkMode: $isDarkMode)
                 .environmentObject(vm)
             //  Attach the same persistent container (not a new one!)
                 .modelContainer(container)
+                .preferredColorScheme(isDarkMode ? .dark : .light)
         }
     }
 

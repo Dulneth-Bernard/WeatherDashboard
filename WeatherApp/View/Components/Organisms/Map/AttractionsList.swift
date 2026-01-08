@@ -1,3 +1,11 @@
+//
+//  AttractionsList.swift
+//  WeatherApp
+//
+//  Created by Dulneth Bernard on 04/01/2026.
+//
+
+
 import SwiftUI
 
 struct AttractionsList: View {

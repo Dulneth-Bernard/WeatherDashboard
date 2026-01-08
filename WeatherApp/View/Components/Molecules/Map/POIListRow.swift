@@ -1,8 +1,16 @@
+//
+//  POIListRow.swift
+//  WeatherApp
+//
+//  Created by Dulneth Bernard on 01/01/2026.
+//
+
+
 import SwiftUI
 import SwiftData
 
 struct POIListRow: View {
-    let poi: AnnotationModel // ✅ Correct type
+    let poi: AnnotationModel
     
     var body: some View {
         HStack {
