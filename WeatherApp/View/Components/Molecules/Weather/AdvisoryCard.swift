@@ -31,7 +31,6 @@ struct AdvisoryCard: View {
             .ultraThinMaterial,
             in: RoundedRectangle(cornerRadius: 14)
         )
-     
     }
 }
 
